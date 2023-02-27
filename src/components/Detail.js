@@ -1,27 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useParams } from "react-router-dom"
+import db from '../firebase';
 
 
 
-function 
-Detail() {
+function Detail() {
+
+    const { id } = useParams();
+    const [ movie, setMovie ] = useState({});
+
+    useEffect(() => {
+        //Grab the movie info from db
+        db.collection("movies")
+        .doc(id)
+        .get()
+        .then((doc)=>{
+            if(doc.exists){
+                // save the movie data
+                setMovie(doc.data());
+            } else {
+                // redirect to homepage
+            }
+        }
+        )
+    })
+
   return (
+
+    
+
+
     <Container>
+
+        
         <Background>
-            <img src="https://images.bauerhosting.com/legacy/empire-tmdb/films/8587/images/klI0K4oQMsLhHdjA9Uw8WLugk9v.jpg?format=jpg&quality=80&width=960&height=540&ratio=16-9&resize=aspectfill"/>
+            <img src={movie.backgroundImg}/>
         </Background>
         <ImageTitle>
-            <img src="https://upload.wikimedia.org/wikipedia/en/4/43/The_Lion_Guard_Logo.png"/>
+            <img src={movie.titleImg}/>
         </ImageTitle>
         <Controls>
 
             <PlayButton>
-                <img src="/play-icon-black.png"/>
+                <img src="/play-icon-black.png" alt='playbtn'/>
                 <span>PLAY</span>
             </PlayButton>
 
             <TrailorButton>
-            <img src="/play-icon-white.png"/>
+            <img src="/play-icon-white.png" alt='trailorbtn'/>
                 <span>TRAILOR</span>
             </TrailorButton>
 
@@ -30,16 +57,15 @@ Detail() {
             </AddButton>
 
             <GroupWatchButton>
-                <img src="group-icon.png"/>
+                <img src="group-icon.png" alt='group'/>
             </GroupWatchButton>
 
         </Controls>
         <SubTitle>
-            Coming of Age, Family, Animation, Action-Adventure, Musical
+            {movie.subTitle}
         </SubTitle>
         <Description>
-        Embark on an extraordinary coming-of-age adventure as Simba, 
-        a lion cub who cannot wait to be king, searches for his destiny in the great "Circle of Life."
+            {movie.description}
         </Description>
     </Container>
   )

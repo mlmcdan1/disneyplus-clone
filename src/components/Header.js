@@ -1,11 +1,71 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { auth, provider } from "../firebase"
 import styled from 'styled-components'
+import { useNavigate } from "react-router-dom"
+import {
+      selectUserName,
+      selectUserPhoto,
+      setUserLogin, 
+      setSignOut
+} from "../features/user/userSlice"
+import { useDispatch, useSelector } from 'react-redux';
 
 function Header() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const userName = useSelector(selectUserName);
+    const userPhoto = useSelector(selectUserPhoto);
+
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user)=>{
+            if(user){
+                dispatch(setUserLogin({
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL
+    
+               }))
+               navigate("/");
+            }
+        })
+    }, [])
+
+    const signIn = () => {
+        auth.signInWithPopup(provider)
+        .then((result)=>{
+           // console.log(result);
+           let user = result.user
+           dispatch(setUserLogin({
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+
+           }))
+           navigate("/");
+        })
+    }
+
+    const signOut = () => {
+        auth.signOut()
+            .then(()=>{
+                dispatch(setSignOut());
+                navigate("/login");
+
+            })
+        
+    }
+
+
     return (
         <Nav>
             <Logo src="logo.svg"/>
-            <NavMenu>
+            { !userName ? (
+                <LoginContainer>
+                    <Login onClick={signIn}>Login</Login>
+                </LoginContainer>
+                ):
+                <>
+                <NavMenu>
                 <a>
                     <img src = "home-icon.svg"/>
                     <span>HOME</span>
@@ -34,8 +94,12 @@ function Header() {
 
             </NavMenu>
 
-            <UserImg src="https://media-exp1.licdn.com/dms/image/C4D03AQEUj2Ad6t0ysQ/profile-displayphoto-shrink_800_800/0/1612043925452?e=1627516800&v=beta&t=jB1x7iSLbiR29uYVm59xiEC6x5CjFNNw4YoywAljGek"/>
-
+            <UserImg
+                onClick={signOut}
+                src="https://www.pngkey.com/png/full/880-8806085_incredibles-2-disney-pixar-dash-incredibles-png.png"/>
+                </>
+            }
+           
 
         </Nav>
     )
@@ -109,4 +173,29 @@ const UserImg = styled.img`
         border-radius: 50%;
         curser: pointer;
 
+`
+
+const Login = styled.div`
+    border: 1px solid #f9f9f9;
+    padding: 8px 16px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background-color: rgba(0,0,0, 0.6);
+    transition: all 0.2s ease 0s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
+
+
+`
+
+const LoginContainer =styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; 
 `

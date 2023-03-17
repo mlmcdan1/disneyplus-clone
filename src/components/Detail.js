@@ -57,7 +57,7 @@ function Detail() {
             </AddButton>
 
             <GroupWatchButton>
-                <img src="group-icon.png" alt='group'/>
+                <img src="/group-icon.png" alt='group'/>
             </GroupWatchButton>
 
         </Controls>

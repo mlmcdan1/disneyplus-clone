@@ -1,5 +1,7 @@
 # Disney+ Clone 🎬
 
+[![Watch the video](https://img.youtube.com/vi/oeuB-5VYMm8/maxresdefault.jpg)](https://youtu.be/oeuB-5VYMm8)
+
 A responsive Disney+ streaming clone built with React, Firebase, and the TMDb API. This project replicates the core UI/UX of Disney+, allowing users to explore movies, shows, and Disney originals with login functionality.
 
 ## 🚀 Features

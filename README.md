@@ -1,44 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Disney+ Clone 🎬
 
-## Available Scripts
+A responsive Disney+ streaming clone built with React, Firebase, and the TMDb API. This project replicates the core UI/UX of Disney+, allowing users to explore movies, shows, and Disney originals with login functionality.
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- 🔐 Firebase Authentication with Google Login
+- 🎥 TMDb API integration to fetch real-time movie/show data
+- 🎞 Hover video previews (trailers) and detail pages
+- 📺 Sections: Disney Originals, Movies, Series, Watchlist
+- 🔍 Search functionality
+- 🎨 Styled using Styled-Components
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🔧 Tech Stack
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- React
+- Firebase (Auth, Firestore, Hosting)
+- TMDb API
+- Redux Toolkit
+- Styled-Components
 
-### `npm test`
+## 📁 Project Structure
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+├── public
+├── src
+│   ├── components
+│   ├── features
+│   ├── firebase.js
+│   ├── App.js
+│   └── index.js
+├── .env
+├── firestore.rules
+└── firebase.json
+```
 
-### `npm run build`
+## 🔑 Environment Variables
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a `.env` file in the root directory and add:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+REACT_APP_TMDB_API_KEY=your_tmdb_api_key
+REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🧪 Setup Instructions
 
-### `npm run eject`
+```bash
+git clone https://github.com/mlmcdan1/disneyplus-clone.git
+cd disneyplus-clone
+npm install
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🚨 Notes
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Firebase Hosting: [Live Project](https://disneyplusclone-f5e5b.web.app)
+- Ensure Firebase project and environment variables are properly set up before deployment.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 📜 License
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+MIT License

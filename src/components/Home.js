@@ -1,11 +1,13 @@
-import React , {useEffect} from 'react'
-import styled from 'styled-components'
-import db from '../firebase'
-import ImgSlider from './ImgSlider'
-import Viewers from './Viewers'
-import Movies from './Movies'
-import { useDispatch} from "react-redux"
-import { setMovies } from "../features/movie/movieSlice"
+import React , {useEffect} from 'react';
+import styled from 'styled-components';
+import db from '../firebase';
+import ImgSlider from './ImgSlider';
+import Viewers from './Viewers';
+import Recommended from './Recommended';
+import DisneyMovies from './DisneyMovies';
+import DisneyShows from './DisneyShows';
+import { useDispatch} from "react-redux";
+import { setMovies } from "../features/movie/movieSlice";
 
  
 function Home() {
@@ -20,14 +22,16 @@ function Home() {
             })
             dispatch(setMovies(tempMovies));
         })
-    }, [])
+    }, [dispatch])
 
 
     return (  
         <Container>
             <ImgSlider/>
             <Viewers/>
-            <Movies/>
+            <Recommended/>
+            <DisneyMovies/>
+            <DisneyShows/>
         </Container>
     )
 }
@@ -51,6 +55,4 @@ const Container =  styled.main`
         bottom: 0;
         z-index: -1;
     }
-
-
 `

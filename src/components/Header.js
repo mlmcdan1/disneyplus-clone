@@ -1,34 +1,36 @@
 import React, { useEffect } from 'react'
 import { auth, provider } from "../firebase"
 import styled from 'styled-components'
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom";
 import {
       selectUserName,
-      selectUserPhoto,
       setUserLogin, 
       setSignOut
-} from "../features/user/userSlice"
+} from "../features/user/userSlice";
 import { useDispatch, useSelector } from 'react-redux';
 
 function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userName = useSelector(selectUserName);
-    const userPhoto = useSelector(selectUserPhoto);
 
     useEffect(() => {
-        auth.onAuthStateChanged(async (user)=>{
-            if(user){
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
                 dispatch(setUserLogin({
                     name: user.displayName,
                     email: user.email,
                     photo: user.photoURL
-    
-               }))
-               navigate("/");
+                }));
+
+                if (window.location.pathname === "/login") {
+                    navigate("/");
+                }
             }
-        })
-    }, [])
+        });
+
+        return () => unsubscribe();
+    }, [dispatch, navigate])
 
     const signIn = () => {
         auth.signInWithPopup(provider)
@@ -58,7 +60,7 @@ function Header() {
 
     return (
         <Nav>
-            <Logo src="logo.svg"/>
+            <Logo src="/logo.svg"/>
             { !userName ? (
                 <LoginContainer>
                     <Login onClick={signIn}>Login</Login>
@@ -66,38 +68,58 @@ function Header() {
                 ):
                 <>
                 <NavMenu>
-                <a>
-                    <img src = "home-icon.svg"/>
+                <Link to="/">
+                    <img 
+                        src = "/home-icon.svg"
+                        alt='home icon'
+                    />
                     <span>HOME</span>
-                </a>
-                <a>
-                    <img src = "search-icon.svg"/>
+                </Link>
+                <Link to="/search">
+                    <img 
+                        src = "/search-icon.svg"
+                        alt='search icon'
+                    />
                     <span>SEARCH</span>
-                </a>
-                <a>
-                    <img src = "watchlist-icon.svg"/>
+                </Link>
+                <Link to="/watchlist">
+                    <img 
+                        src = "/watchlist-icon.svg"
+                        alt='watch icon'
+                    />
                     <span>WATCHLIST</span>
-                </a>
-                <a>
-                    <img src = "original-icon.svg"/>
+                </Link>
+                <Link to="/original">
+                    <img 
+                        src = "/original-icon.svg"
+                        alt='star icon'
+                    />
                     <span>ORIGINAL</span>
-                </a>
-                <a>
-                    <img src = "movie-icon.svg"/>
+                </Link>
+                <Link to="/movies">
+                    <img 
+                        src = "/movie-icon.svg"
+                        alt='movie icon'
+                    />
                     <span>MOVIES</span>
-                </a>
-                <a>
-                    <img src = "series-icon.svg"/>
+                </Link>
+                <Link to="/series">
+                    <img 
+                        src = "/series-icon.svg"
+                        alt='tv icon'
+                    />
                     <span>SERIES</span>
-                </a>
+                </Link>
 
 
             </NavMenu>
 
             <UserImg
                 onClick={signOut}
-                src="https://www.pngkey.com/png/full/880-8806085_incredibles-2-disney-pixar-dash-incredibles-png.png"/>
-                </>
+                src="https://www.pngkey.com/png/full/880-8806085_incredibles-2-disney-pixar-dash-incredibles-png.png"
+                alt='small logo'
+            />
+            </>
             }
            
 
@@ -131,6 +153,8 @@ const NavMenu = styled.div`
         align-items: center;
         padding: 0 12px;
         cursor: pointer;
+        text-decoration: none; 
+        color: white;
         img{
             height: 20px; 
         }
